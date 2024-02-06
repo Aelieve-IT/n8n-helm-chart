@@ -117,10 +117,10 @@ Create the name of the service account to use
     {{- if .Values.config }}
         {{- $conf_val = "/n8n-config/config.json" }}
     {{- end }}
-    {{- if .Values.secret }}
+    {{- if or .Values.secret .Values.existingSecret }}
         {{- $sec_val = "/n8n-secret/secret.json" }}
     {{- end }}
-    {{- if and .Values.config .Values.secret }}
+    {{- if and .Values.config (or .Values.secret .Values.existingSecret) }}
         {{- $separator  = "," }}
     {{- end }}
     {{- print $conf_val $separator $sec_val }}
